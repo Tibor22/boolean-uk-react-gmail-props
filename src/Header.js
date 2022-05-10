@@ -1,9 +1,12 @@
-import { useState } from "react";
+export default function Header({ emails, search, setSearch, setCurrentTab }) {
+  const searchEmail = (e) => {
+    setSearch(e.target.value);
+    if (search.length > 0) {
+      setCurrentTab("search");
+    }
+  };
 
-export default function Header({ emails }) {
-  const [search, setSearch] = useState();
-
-  console.log(search);
+  //   console.log(search);
 
   return (
     <header className="header">
@@ -20,7 +23,7 @@ export default function Header({ emails }) {
 
       <div className="search">
         <input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => searchEmail(e)}
           className="search-bar"
           placeholder="Search mail"
         />

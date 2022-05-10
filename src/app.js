@@ -14,9 +14,14 @@ function App() {
   const [emails, setEmails] = useState(initialEmails);
   const [hideRead, setHideRead] = useState(false);
   const [currentTab, setCurrentTab] = useState("inbox");
-
+  const [search, setSearch] = useState("");
   const unreadEmails = emails.filter((email) => !email.read);
   const starredEmails = emails.filter((email) => email.starred);
+
+  const result = (emails) =>
+    emails.filter((email) => {
+      if (email.title.includes(search)) return email;
+    });
 
   const toggleStar = (targetEmail) => {
     const updatedEmails = (emails) =>
@@ -55,10 +60,19 @@ function App() {
   if (currentTab === "starred")
     filteredEmails = getStarredEmails(filteredEmails);
 
+  if (currentTab === "search") {
+    filteredEmails = result(filteredEmails);
+  }
+
   console.log(filteredEmails);
   return (
     <div className="app">
-      <Header emails={emails} />
+      <Header
+        emails={emails}
+        search={search}
+        setSearch={setSearch}
+        setCurrentTab={setCurrentTab}
+      />
       <nav className="left-menu">
         <ul className="inbox-list">
           <li
